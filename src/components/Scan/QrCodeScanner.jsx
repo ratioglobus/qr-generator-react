@@ -1,35 +1,42 @@
 import { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
-import s from './qrCodeScanner.module.css'
+import s from './qrCodeScanner.module.css';
 
-import { SCAN_DATA } from '../../constants'
+import { SCAN_DATA } from '../../constants';
 
 export const QrCodeScanner = () => {
-    const [scanned, setScanned] = useState(null);
+  const [scanned, setScanned] = useState(null);
 
-    const scanHendler = (result) => {
-        if(!result) return;
-        const prevData = JSON.parse(localStorage.getItem(SCAN_DATA) || '[]');
+  const scanHandler = (result, error) => {
+    if (!!result) {
+      const prevData = JSON.parse(localStorage.getItem(SCAN_DATA) || '[]');
+      if (prevData.includes(result.text)) return;
 
-        if (prevData.includes(result.text)) return;
+      setScanned(result.text);
 
-        setScanned(result.text);
+      localStorage.setItem(
+        SCAN_DATA,
+        JSON.stringify([...prevData, result.text])
+      );
+    }
 
-        localStorage.setItem(
-            SCAN_DATA, 
-            JSON.stringify([...prevData, result.text])
-        );
-    };
+    if (!!error) {
+      console.info(error);
+    }
+  };
 
-    return (
-        <div className={s.container}>
-            <QrReader
-                scanDelay={1000}
-                onResult={scanHendler}
-                containerStyle={{width: '500px'}}
-            />
+  return (
+    <div className={s.container}>
+      <div className={s.scanner}>
+        <QrReader
+          constraints={{ facingMode: 'environment' }}
+          onResult={scanHandler}
+          scanDelay={500}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
 
-             <p className={s.result}>{scanned}</p>
-        </div>
-    )
-}
+      {scanned && <p className={s.result}>Результат: {scanned}</p>}
+    </div>
+  );
+};

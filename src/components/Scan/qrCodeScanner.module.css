@@ -5,9 +5,38 @@
     flex-direction: column;
     gap: 10px;
     height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.scanner {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+    background: #000; /* чтобы камера не дергалась при инициализации */
 }
 
 .result {
     font-size: 20px;
     margin-bottom: 30px;
+    color: #222;
+    text-align: center;
+    word-break: break-word;
+    max-width: 90%;
+}
+
+/* 📱 адаптив */
+@media (max-width: 600px) {
+    .scanner {
+        max-width: 300px;
+    }
+
+    .result {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
 }
