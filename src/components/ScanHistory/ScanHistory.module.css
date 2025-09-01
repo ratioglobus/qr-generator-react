@@ -41,3 +41,19 @@
   margin-right: 20px;
   word-break: break-word;
 }
+
+/* 🔗 стили для ссылок в истории */
+.link {
+  font-size: 16px;
+  color: #0077ff;
+  text-decoration: none;
+  flex: 1;
+  margin-right: 20px;
+  word-break: break-all;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #0056cc;
+  text-decoration: underline;
+}

@@ -29,3 +29,21 @@
     border-radius: 16px;
     padding: 8px 16px;
 }
+
+/* 📱 адаптив */
+@media (max-width: 600px) {
+    .input {
+        max-width: 300px;
+        font-size: 22px;
+        height: 30px;
+    }
+
+    .button {
+        font-size: 16px;
+    }
+
+    .text, .link {
+        font-size: 16px;
+    }
+}
+
