@@ -25,6 +25,9 @@ export const QrCodeScanner = () => {
     }
   };
 
+  // проверим: если строка выглядит как ссылка
+  const isLink = scanned && /^https?:\/\//i.test(scanned);
+
   return (
     <div className={s.container}>
       <div className={s.scanner}>
@@ -36,7 +39,18 @@ export const QrCodeScanner = () => {
         />
       </div>
 
-      {scanned && <p className={s.result}>Результат: {scanned}</p>}
+      {scanned && (
+        <div className={s.resultBox}>
+          <p className={s.label}>Результат сканирования:</p>
+          {isLink ? (
+            <a href={scanned} target="_blank" rel="noopener noreferrer" className={s.link}>
+              {scanned}
+            </a>
+          ) : (
+            <p className={s.text}>{scanned}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
