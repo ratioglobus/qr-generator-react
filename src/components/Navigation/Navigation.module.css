@@ -7,7 +7,7 @@
 .nav {
   margin-top: 20px;
   display: flex;
-  gap: 40px; /* отступ между группами */
+  gap: 40px;
 }
 
 .group {
@@ -31,7 +31,6 @@
   color: #0077ff;
 }
 
-/* 📱 адаптив */
 @media (max-width: 600px) {
   .nav {
     flex-direction: column;
@@ -41,7 +40,6 @@
 
   .group {
     width: 100%;
-    align-items: center;
     padding: 16px;
   }
 
