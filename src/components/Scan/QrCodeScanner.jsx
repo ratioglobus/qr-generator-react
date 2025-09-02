@@ -10,19 +10,21 @@ export const QrCodeScanner = () => {
 
   const scanHandler = (result, error) => {
     if (!!result) {
+      const newScan = result.text.trim();
       const prevData = JSON.parse(localStorage.getItem(SCAN_DATA) || '[]');
-      
-      if (prevData.includes(result.text)) {
-        setWarning("Этот QR уже был отсканирован. Посмотрите историю сканирования.");
-        return;
-    }
 
-      setScanned(result.text);
+      if (prevData.includes(newScan)) {
+        setWarning("Этот QR уже был отсканирован. Посмотрите историю сканирования.");
+        setScanned(null); // чтобы блок результата не отображался
+        return;
+      }
+
+      setScanned(newScan);
       setWarning("");
 
       localStorage.setItem(
         SCAN_DATA,
-        JSON.stringify([...prevData, result.text])
+        JSON.stringify([...prevData, newScan])
       );
     }
 
@@ -44,10 +46,11 @@ export const QrCodeScanner = () => {
         />
       </div>
 
+      {warning && <p className={s.warning}>{warning}</p>}
+
       {scanned && (
         <div className={s.resultBox}>
           <p className={s.label}>Результат сканирования:</p>
-          {warning && <p className={s.warning}>{warning}</p>}
           {isLink ? (
             <a href={scanned} target="_blank" rel="noopener noreferrer" className={s.link}>
               {scanned}

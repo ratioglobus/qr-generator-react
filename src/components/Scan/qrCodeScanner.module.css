@@ -7,6 +7,7 @@
     height: 100vh;
     padding: 20px;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .scanner {
@@ -55,8 +56,8 @@
     margin-top: 12px;
     padding: 10px 16px;
     border-radius: 8px;
-    background-color: #fff4e5; /* мягкий оранжевый фон */
-    color: #ff6b00; /* тёплый оранжевый текст */
+    background-color: #fff4e5;
+    color: #ff6b00;
     font-size: 16px;
     text-align: center;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -64,20 +65,16 @@
     word-break: break-word;
 }
 
-/* Адаптация для мобильных */
-@media (max-width: 600px) {
-    .warning {
-        font-size: 14px;
-        padding: 8px 12px;
-        max-width: 90%;
-    }
-}
-
-
 /* 📱 адаптив */
 @media (max-width: 600px) {
     .container {
         height: 50vh;
+    }
+
+    .warning {
+        font-size: 14px;
+        padding: 8px 12px;
+        max-width: 90%;
     }
 
     .scanner {

@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     gap: 15px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .qrWrapper svg path:last-child {
