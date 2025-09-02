@@ -20,7 +20,7 @@ export const QrCodeScanner = () => {
 
       // Блокировка повторного сканирования в течение 5 секунд
       const now = Date.now();
-      if (now - lastScanTimeRef.current < 5000) return;
+      if (now - lastScanTimeRef.current < 3500) return;
 
       lastScanTimeRef.current = now;
 
@@ -48,7 +48,7 @@ export const QrCodeScanner = () => {
         <QrReader
           constraints={{ facingMode: 'environment' }}
           onResult={scanHandler}
-          scanDelay={500} // небольшой интервал между кадрами
+          scanDelay={500}
           style={{ width: '100%', height: '100%' }}
         />
       </div>
