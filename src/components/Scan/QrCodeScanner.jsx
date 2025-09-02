@@ -1,21 +1,32 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { QrReader } from 'react-qr-reader';
 import s from './qrCodeScanner.module.css';
-
 import { SCAN_DATA } from '../../constants';
 
 export const QrCodeScanner = () => {
   const [scanned, setScanned] = useState(null);
   const [warning, setWarning] = useState("");
+  const lastScanTimeRef = useRef(0); // для блокировки быстрых повторных сканов
 
   const scanHandler = (result, error) => {
+    if (!!error) {
+      console.info(error);
+      return;
+    }
+
     if (!!result) {
       const newScan = result.text.trim();
       const prevData = JSON.parse(localStorage.getItem(SCAN_DATA) || '[]');
 
+      // Блокировка повторного сканирования в течение 5 секунд
+      const now = Date.now();
+      if (now - lastScanTimeRef.current < 5000) return;
+
+      lastScanTimeRef.current = now;
+
       if (prevData.includes(newScan)) {
         setWarning("Этот QR уже был отсканирован. Посмотрите историю сканирования.");
-        setScanned(null); // чтобы блок результата не отображался
+        setScanned(null);
         return;
       }
 
@@ -27,10 +38,6 @@ export const QrCodeScanner = () => {
         JSON.stringify([...prevData, newScan])
       );
     }
-
-    if (!!error) {
-      console.info(error);
-    }
   };
 
   const isLink = scanned && /^https?:\/\//i.test(scanned);
@@ -41,7 +48,7 @@ export const QrCodeScanner = () => {
         <QrReader
           constraints={{ facingMode: 'environment' }}
           onResult={scanHandler}
-          scanDelay={5000}
+          scanDelay={500} // небольшой интервал между кадрами
           style={{ width: '100%', height: '100%' }}
         />
       </div>
